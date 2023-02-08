@@ -1,46 +1,36 @@
-import { useState, useEffect } from "react";
-import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-function ImageGrid() {
-  const getKey = (pageIndex, previousPageData) => {
-    pageIndex = pageIndex + 1;
-    if (previousPageData && !previousPageData.length) return null;
-    return `https://jsonplaceholder.typicode.com/photos?_page=${pageIndex}&_limit=5`;
-  };
-  const fetcher = async (url) => {
-    const res = await fetch(url);
-    const data = res.json();
-    return data;
-  };
-  const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
-  const images = data?.flat();
-
+function ImageGrid({ imageGrid, fetchData, page, setActiveImage, setLightboxShown }) {
   return (
-    <>
-      <div className="image-grid"></div>
-      <InfiniteScroll
-        dataLength={images?.length ?? 0} //This is important field to render the next data
-        next={() => setSize(size + 1)}
-        hasMore={true}
-        loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
-      >
-        {images?.map((image, index) => (
-          <>
-            {console.log("url", image)}
-            <div className="imageWrapper">
-              <img src={image.url} className="image" width="500" height="500" alt="a random dog" />
-            </div>
-          </>
+    <InfiniteScroll
+      dataLength={imageGrid[0]?.length ?? 0}
+      next={() => fetchData(page)}
+      hasMore={true}
+      loader={<h4>Cargando</h4>}
+    >
+      <div className="image-grid">
+        {imageGrid?.map((column) => (
+          <div className="column">
+            {column.map((image, index) => (
+              <div className="image-wrapper">
+                <img
+                  src={image.urls.regular}
+                  onClick={() => {
+                    setActiveImage(image.urls.regular);
+                    setLightboxShown(true);
+                  }}
+                  className="image"
+                  width="500"
+                  height="500"
+                  alt={image.alt_description}
+                />
+                <p>{image.alt_description?.charAt(0).toUpperCase() + image.alt_description?.slice(1) || ""}</p>
+              </div>
+            ))}
+          </div>
         ))}
-      </InfiniteScroll>
-      {/* <button onClick={() => setSize(size + 1)}>More</button> */}
-    </>
+      </div>
+    </InfiniteScroll>
   );
 }
 
