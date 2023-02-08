@@ -9,10 +9,10 @@ function ImageGrid({ imageGrid, fetchData, page, setActiveImage, setLightboxShow
       loader={<h4>Cargando</h4>}
     >
       <div className="image-grid">
-        {imageGrid?.map((column) => (
-          <div className="column">
-            {column.map((image, index) => (
-              <div className="image-wrapper">
+        {imageGrid?.map((column, index) => (
+          <div className="column" key={index}>
+            {column.map((image) => (
+              <div key={image.id} className="image-wrapper">
                 <img
                   src={image.urls.regular}
                   onClick={() => {

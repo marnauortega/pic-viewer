@@ -1,6 +1,6 @@
 # Pic Viewer
 
-![Pic Viewer](/nivell-4-bonus/screenshot.png)
+![Pic Viewer](screenshot.webp)
 
 [Live Site](https://react-sprint-1.netlify.app/)
 
