@@ -10,7 +10,7 @@ function ImageGrid({ imageGrid, fetchData, page, setActiveImage, setLightboxShow
     >
       <div className="image-grid">
         {imageGrid?.map((column, index) => (
-          <div className="column" key={index}>
+          <div className="column" key={column[index][0]}>
             {column.map((image) => (
               <div key={image.id} className="image-wrapper">
                 <img
