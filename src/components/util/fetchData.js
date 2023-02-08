@@ -16,7 +16,7 @@ export const fetchData = async (url, setState, page = 1, previousResponse = []) 
   }
 };
 
-const generateSplitArray = (array, columnNumber, columnLength) => {
+export const generateSplitArray = (array, columnNumber, columnLength) => {
   let currentArrayPart = array;
   const splitArray = [];
   for (let i = 0; i < columnNumber; i++) {
