@@ -7,7 +7,7 @@ import runLenis from "./utils/lenis";
 export default function App() {
   const fetchData = async (page) => {
     const res = await fetch(
-      `https://api.unsplash.com/photos/?client_id=bUKxlEabX8F4PW85us09Wl4M3JexnQbudWXQFidQRGQ&page=${page}&per_page=24`
+      `https://api.unsplash.com/photos/?client_id=${import.meta.env.VITE_API_KEY}&page=${page}&per_page=24`
     );
     const data = await res.json();
     const result = generateSplitArray(data, 3, 6);
