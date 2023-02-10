@@ -5,14 +5,16 @@ import Lightbox from "./components/Lightbox";
 import runLenis from "./utils/lenis";
 
 export default function App() {
-  const fetchData = async (page) => {
+  const fetchData = async (page, reset = false) => {
     const res = await fetch(
       `https://api.unsplash.com/photos/?client_id=${import.meta.env.VITE_API_KEY}&page=${page}&per_page=24`
     );
     const data = await res.json();
-    const result = generateSplitArray(data, 3, 6);
-    const mergedResult = result.map((column, index) => (imageGrid[index] ? [...imageGrid[index], ...column] : column));
-    setImageGrid(mergedResult);
+    let result = generateSplitArray(data, 3, 6);
+    if (!reset && imageGrid[0]) {
+      result = result.map((column, index) => [...imageGrid[index], ...column]);
+    }
+    setImageGrid(result);
     setPage(page + 1);
   };
 
@@ -51,7 +53,7 @@ export default function App() {
 
   return (
     <main>
-      <Controls setImageGrid={setImageGrid} setPage={setPage} fetchData={fetchData} />
+      <Controls setPage={setPage} page={page} fetchData={fetchData} />
       <ImageGrid
         imageGrid={imageGrid}
         fetchData={fetchData}

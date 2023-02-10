@@ -1,6 +1,6 @@
 import h1 from "../assets/img/h1.svg";
 
-const Controls = ({ setImageGrid, setPage, fetchData }) => {
+const Controls = ({ setPage, page, fetchData }) => {
   return (
     <>
       <h1>
@@ -9,9 +9,8 @@ const Controls = ({ setImageGrid, setPage, fetchData }) => {
       <div className="button-wrapper">
         <button
           onClick={() => {
-            setImageGrid([]);
-            setPage(1);
-            fetchData(1);
+            setPage(page + 1);
+            fetchData(page + 1, true);
           }}
         >
           Cargar nuevas fotos
